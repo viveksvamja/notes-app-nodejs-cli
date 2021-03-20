@@ -24,9 +24,9 @@ const getNotes = () => {
 const addNote = (title, description) => {
     const notes = loadNotes()
 
-    duplicateNote = notes.filter((note) => title == note.title)
+    duplicateNote = notes.find((note) => title == note.title)
 
-    if (duplicateNote.length > 0) {
+    if (duplicateNote) {
         console.log(fail_msg('Note already exists!'))
         return;
     }
@@ -64,8 +64,21 @@ const removeNote = (title) => {
     console.log(success_msg('Note deleted successfully!'));
 }
 
+const readNote = (title) => {
+    const notes = loadNotes()
+
+    const result = notes.find((note) => note.title == title)
+
+    if (!result) {
+        console.log(fail_msg('Unable to read note!'))
+    } else {
+        console.log(success_msg(result.title))
+        console.log(result.description)
+    }
+}
 module.exports = {
     addNote : addNote,
     getNotes : getNotes,
-    removeNote : removeNote
+    removeNote : removeNote,
+    readNote : readNote
 }
